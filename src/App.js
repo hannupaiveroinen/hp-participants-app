@@ -1,109 +1,96 @@
-import React, { Component } from 'react';
-import styled from 'styled-components'
-import { useTable } from 'react-table'
-import './App.css';
-import makeData from './dummyGenerator'
+import React from "react";
+import { getDummyData } from "./dummyGenerator";
 
-const Styles = styled.div`
-  padding: 1rem;
+// Import React Table
+import ReactTable from "react-table";
+import "react-table/react-table.css";
 
-  table {
-    border-spacing: 0;
-    border: 1px solid black;
-
-    tr {
-      :last-child {
-        td {
-          border-bottom: 0;
-        }
-      }
-    }
-
-    th,
-    td {
-      margin: 0;
-      padding: 0.5rem;
-      border-bottom: 1px solid black;
-      border-right: 1px solid black;
-
-      :last-child {
-        border-right: 0;
-      }
-    }
+class App extends React.Component {
+  state = {
+    data: []
   }
-`
-function Table({ columns, data }) {
-  // Use the state and functions returned from useTable to build your UI
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    rows,
-    prepareRow,
-  } = useTable({
-    columns,
-    data,
-  })
 
-  // Render the UI for your table
-  return (
-    <table {...getTableProps()}>
-      <thead>
-        {headerGroups.map(headerGroup => (
-          <tr {...headerGroup.getHeaderGroupProps()}>
-            {headerGroup.headers.map(column => (
-              <th {...column.getHeaderProps()}>{column.render('Header')}</th>
-            ))}
-          </tr>
-        ))}
-      </thead>
-      <tbody {...getTableBodyProps()}>
-        {rows.map((row, i) => {
-          prepareRow(row)
-          return (
-            <tr {...row.getRowProps()}>
-              {row.cells.map(cell => {
-                return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
-              })}
-            </tr>
-          )
-        })}
-      </tbody>
-    </table>
-  )
-}
+  constructor() {
+    super();
+    this.state = {
+      data: getDummyData()
+    };
+    this.renderEditable = this.renderEditable.bind(this);
+  }
+  renderEditable(cellInfo) {
+    return (
+      <div
+        style={{ backgroundColor: "#fafafa" }}
+        contentEditable
+        suppressContentEditableWarning
+        onBlur={e => {
+          const data = [...this.state.data];
+          data[cellInfo.index][cellInfo.column.id] = e.target.innerHTML;
+          this.setState({ data });
+        }}
+        dangerouslySetInnerHTML={{
+          __html: this.state.data[cellInfo.index][cellInfo.column.id]
+        }}
+      />
+    );
+  }
 
-function App() {
-  const columns = React.useMemo(
-    () => [
-      //id (hidden), name, email address, and phone number
-      {
-        Header: 'Id',
-        accessor: 'id',
-      },
-      {
-        Header: 'Name',
-        accessor: 'name',
-      },
-      {
-        Header: 'E-mail address',
-        accessor: 'email',
-      },
-      {
-        Header: 'Phone Number',
-        accessor: 'phoneNumber',
-      },
-    ],
-    []
-  )
+  render() {
+    /* const data = this.props.parts.parts.map(element => {
+      element.edit = <EditPart />
+      element.save = <Save />
+      element.delete = <Delete />
+      return element;
+    });
+     
 
-  const data = React.useMemo(() => makeData(20), [])
+  handleRemove = (i) => {
+    this.setState(state => ({
+      data: state.data.filter((row, j) => j !== i),
+    }));
+  }
+  */
+    const { data } = this.state;
+    return (
+      <div>
+        <ReactTable
+          data={data}
+          defaultSorted={[
+            {
+              id: "name",
+              desc: true
+            }
+          ]}
+          columns={[
+            {
+              Header: "FName",
+              accessor: "name",
+              Cell: this.renderEditable
+            },
+            {
+              Header: "Delete",
+              id: 'delete',
+              accessor: str => "delete",
 
-  return (
-    <Styles>
-      <Table columns={columns} data={data} />
-    </Styles>
-  )
+              Cell: (row) => (
+                <span style={{ cursor: 'pointer', color: 'blue', textDecoration: 'underline' }}
+                  onClick={() => {
+                    // TODO: refactor to handleRemove
+                    let data = this.state.data;
+                    console.log(this.state.data[row.index]);
+                    data.splice(row.index, 1)
+                    this.setState({ data })
+                  }}>
+                </span>
+              )
+            }
+          ]}
+          defaultPageSize={10}
+          className="-striped -highlight"
+        />
+      </div>
+    );
+  }
 }
 
 export default App
