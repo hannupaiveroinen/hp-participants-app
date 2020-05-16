@@ -22,3 +22,35 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+.ReactTable .rt-tbody .rt-tr-group, .ReactTable .rt-tbody .rt-td {
+  height: 72px;
+  padding: 0px;
+}
+
+.ReactTable .rt-thead.-header, .ReactTable .rt-thead .rt-th {
+  height: 48px;
+  padding: 0px;
+}
+
+.ReactTable .rt-thead .rt-th.-cursor-pointer {
+  padding: 0px;
+}
+
+.ReactTable .rt-thead .rt-resizable-header-content {
+  margin: 17px auto 17px 24px;
+  color: #757575;
+  font-size: 14px;
+  line-height: 16px;
+  font-weight: 500;
+  text-align: left;
+}
+
+.ReactTable .rt-thead .rt-th.-sort-desc {
+  box-shadow: none;
+  /*TODO add arrow*/
+}
+
+.ReactTable .rt-thead .rt-th.-sort-asc {
+  box-shadow: none;
+}
