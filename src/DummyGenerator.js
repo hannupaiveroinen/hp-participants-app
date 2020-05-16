@@ -12,8 +12,7 @@ const newPerson = () => {
     const firstName = namor.generate({ words: 1, numbers: 0 });
     const lastName = namor.generate({ words: 1, numbers: 0 });
     return {
-        //id (hidden), name, email address, and phone number
-        id: namor.generate({ words: 0, numbers: 11 }),
+        participantId: namor.generate({ words: 0, numbers: 11 }),
         name: firstName + ' ' + lastName,
         email: firstName + '.' + lastName + '@' + namor.generate({ words: 1, numbers: 0 }) + '.com',
         phone: '+' + namor.generate({ words: 0, numbers: 12 }),
