@@ -7,8 +7,6 @@ import { connect } from "react-redux";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash } from '@fortawesome/fontawesome-free-solid'
 
-import { getDummyData } from "../DummyGenerator";
-
 import { loadData, addParticipant } from '../redux/actions';
 
 class ParticipantsTable extends Component {
@@ -80,7 +78,7 @@ class ParticipantsTable extends Component {
                     }
                 ]}
                 defaultPageSize={this.props.participants.length}
-                className="-striped -highlight"
+                className="-highlight participations-table"
             />
         );
     }

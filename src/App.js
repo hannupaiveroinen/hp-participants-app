@@ -3,6 +3,7 @@ import "./App.css";
 
 import CreateParticipant from './components/CreateParticipant'
 import ParticipantsTable from "./components/ParticipantsTable";
+import Header from './components/Header'
 
 class App extends React.Component {
  
@@ -23,7 +24,8 @@ class App extends React.Component {
   }
   */
     return (
-      <div>
+      <div className='page-container'>
+        <Header />
         <CreateParticipant />
         <ParticipantsTable />
       </div>
