@@ -13,12 +13,37 @@
 }
 
 .create-participant-form {
- margin: 32px;
+  margin: 96px 32px 8px 32px;
+}
+
+.create-participant-form > div{
+  display: inline-flex;
+  width: 912px;
+  padding: 16px 0 16px 0;
+  background-color: #ffffff;
+ }
+
+.create-participant-form > h1 {
+  color: #757575;
+}
+
+.create-participant-form > div > input {
+  margin-left: 16px;
+  height: 40px;
+  font-size: 16px;
+}
+
+.create-participant-form > div > button {
+  font-size: 14px;
+  border: none;
+  margin-left: 16px;
+  font-weight: 500;
 }
 
 .page-container {
   background-color: #D3D3D3;
   padding: 0px;
+  padding-bottom: 96px;
 }
 
 .participations-table {

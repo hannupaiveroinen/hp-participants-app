@@ -31,13 +31,13 @@ class CreateParticipant extends Component {
     render() {
         return (
             <div className='create-participant-form'>
-                <h3 style={{ color: '#FFFFFF' }}>List of participants</h3>
-                <input type="text" name="name" value={this.state.name} placeholder="Full name" onChange={this.handleChange} />
-                <input type="email" name="email" value={this.state.email} placeholder="E-mail address" onChange={this.handleChange} />
-                <input type="text" name="phone" value={this.state.phone} placeholder="Phone number" onChange={this.handleChange} />
-                <button onClick={this.handleSubmit}>
-                    Add new
-            </button>
+                <h1>List of participants</h1>
+                <div>
+                    <input type="text" name="name" value={this.state.name} placeholder="Full name" onChange={this.handleChange} style={{width:190}}/>
+                    <input type="email" name="email" value={this.state.email} placeholder="E-mail address" onChange={this.handleChange}  style={{width:330}}/>
+                    <input type="text" name="phone" value={this.state.phone} placeholder="Phone number" onChange={this.handleChange}  style={{width:190}}/>
+                    <button onClick={this.handleSubmit}>Add new</button>
+                </div>
             </div>
         );
     }

@@ -36,6 +36,7 @@ class ParticipantsTable extends Component {
                 data={this.props.participants}
                 loading={this.state.loading}
                 showPagination={false}
+                minRows={0}
                 defaultSorted={[
                     {
                         id: "name",
@@ -50,15 +51,18 @@ class ParticipantsTable extends Component {
                     }, {
                         Header: "Name",
                         accessor: "name",
-                        Cell: this.renderEditable
+                        Cell: this.renderEditable,
+                        width: 220
                     }, {
                         Header: "E-mail address",
                         accessor: "email",
-                        Cell: this.renderEditable
+                        Cell: this.renderEditable,
+                        width: 360
                     }, {
                         Header: "Phone number",
                         accessor: "phone",
-                        Cell: this.renderEditable
+                        Cell: this.renderEditable,
+                        width: 220
                     },
                     {
                         id: 'delete',
@@ -110,7 +114,6 @@ class ParticipantsTable extends Component {
 
 const mapStateToProps = state => {
     const participants = state.participants;
-    console.log(participants);
     return { participants: participants };
 };
 

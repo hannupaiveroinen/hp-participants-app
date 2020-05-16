@@ -1,6 +1,6 @@
 import { createStore } from "redux";
 import rootReducer from "./reducers";
-import { getDummyData } from "../DummyGenerator";
+import { getDummyData } from "../utils/DummyGenerator";
 
 
 const initialState = {
