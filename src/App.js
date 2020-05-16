@@ -1,26 +1,38 @@
 import React from "react";
+import "./App.css";
 import { getDummyData } from "./dummyGenerator";
 
 // Import React Table
 import ReactTable from "react-table";
 import "react-table/react-table.css";
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTrash } from '@fortawesome/fontawesome-free-solid'
+
 class App extends React.Component {
   state = {
-    data: []
+    data: [],
+    loading: Boolean
   }
 
   constructor() {
     super();
     this.state = {
-      data: getDummyData()
+      data: getDummyData(),
+      loading: true
     };
     this.renderEditable = this.renderEditable.bind(this);
   }
   renderEditable(cellInfo) {
     return (
       <div
-        style={{ backgroundColor: "#fafafa" }}
+        style={{
+          margin: '24px auto 24px 24px',
+          color: '#505050',
+          fontSize: '16px',
+          lineHeight: '24px',
+          fontWeight: '400'
+        }}
         contentEditable
         suppressContentEditableWarning
         onBlur={e => {
@@ -33,6 +45,10 @@ class App extends React.Component {
         }}
       />
     );
+  }
+
+  componentDidMount() {
+    this.setState(state => (state.loading = false, state))
   }
 
   render() {
@@ -55,6 +71,8 @@ class App extends React.Component {
       <div>
         <ReactTable
           data={data}
+          loading={this.state.loading}
+          showPagination={false}
           defaultSorted={[
             {
               id: "name",
@@ -63,17 +81,23 @@ class App extends React.Component {
           ]}
           columns={[
             {
-              Header: "FName",
+              Header: "Name",
               accessor: "name",
+              Cell: this.renderEditable
+            }, {
+              Header: "E-mail address",
+              accessor: "email",
+              Cell: this.renderEditable
+            }, {
+              Header: "Phone number",
+              accessor: "phone",
               Cell: this.renderEditable
             },
             {
-              Header: "Delete",
               id: 'delete',
               accessor: str => "delete",
-
               Cell: (row) => (
-                <span style={{ cursor: 'pointer', color: 'blue', textDecoration: 'underline' }}
+                <span style={{ cursor: 'pointer', color: '#909090', height: 24, width: 24, display: 'inline-block', margin: '24px' }}
                   onClick={() => {
                     // TODO: refactor to handleRemove
                     let data = this.state.data;
@@ -81,11 +105,13 @@ class App extends React.Component {
                     data.splice(row.index, 1)
                     this.setState({ data })
                   }}>
+                  <FontAwesomeIcon icon={faTrash} />
                 </span>
-              )
+              ),
+              width: 3 * 24
             }
           ]}
-          defaultPageSize={10}
+          defaultPageSize={20}
           className="-striped -highlight"
         />
       </div>
