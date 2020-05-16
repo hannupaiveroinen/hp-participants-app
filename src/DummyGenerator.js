@@ -36,9 +36,8 @@ export default function makeData(...lens) {
 
 export function getDummyData(len = 20) {
     return range(len).map(d => {
-      return {
-        ...newPerson(),
-        children: range(10).map(newPerson)
-      };
+        return {
+            ...newPerson()
+        };
     });
-  }
+}

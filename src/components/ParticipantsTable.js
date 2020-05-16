@@ -2,38 +2,40 @@ import React, { Component } from 'react';
 
 import ReactTable from "react-table";
 import "react-table/react-table.css";
+import { connect } from "react-redux";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash } from '@fortawesome/fontawesome-free-solid'
 
 import { getDummyData } from "../DummyGenerator";
 
+import { loadData, addParticipant } from '../redux/actions';
+
 class ParticipantsTable extends Component {
 
-    state = {
-        data: [],
-        loading: Boolean
+    componentWillMount() {
+        this.props.loadData();
     }
 
     constructor() {
         super();
+
         this.state = {
-            data: getDummyData(),
             loading: true
         };
+
         this.renderEditable = this.renderEditable.bind(this);
     }
 
 
     componentDidMount() {
-        this.setState(state => (state.loading = false, state))
+        this.setState(state => (state.loading = false, state));
     }
 
     render() {
-        const { data } = this.state;
         return (
             <ReactTable
-                data={data}
+                data={this.props.participants}
                 loading={this.state.loading}
                 showPagination={false}
                 defaultSorted={[
@@ -67,8 +69,7 @@ class ParticipantsTable extends Component {
                             <span style={{ cursor: 'pointer', color: '#909090', height: 24, width: 24, display: 'inline-block', margin: '24px' }}
                                 onClick={() => {
                                     // TODO: refactor to handleRemove
-                                    let data = this.state.data;
-                                    console.log(this.state.data[row.index]);
+                                    let data = this.props.participants;
                                     data.splice(row.index, 1)
                                     this.setState({ data })
                                 }}>
@@ -78,7 +79,7 @@ class ParticipantsTable extends Component {
                         width: 3 * 24
                     }
                 ]}
-                defaultPageSize={20}
+                defaultPageSize={this.props.participants.length}
                 className="-striped -highlight"
             />
         );
@@ -97,16 +98,31 @@ class ParticipantsTable extends Component {
                 contentEditable
                 suppressContentEditableWarning
                 onBlur={e => {
-                    const data = [...this.state.data];
+                    const data = this.props.participants;
                     data[cellInfo.index][cellInfo.column.id] = e.target.innerHTML;
                     this.setState({ data });
                 }}
                 dangerouslySetInnerHTML={{
-                    __html: this.state.data[cellInfo.index][cellInfo.column.id]
+                    __html: this.props.participants[cellInfo.index][cellInfo.column.id]
                 }}
             />
         );
     }
 }
 
-export default ParticipantsTable;
+const mapStateToProps = state => {
+    const participants = state.participants;
+    console.log(participants);
+    return { participants: participants };
+};
+
+const mapDispatchToProps = dispatch => ({
+    loadData: () => {
+        dispatch(loadData());
+    },
+    addParticipant: () => {
+        dispatch(addParticipant());
+    }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ParticipantsTable);

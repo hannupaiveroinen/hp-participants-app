@@ -1,7 +1,6 @@
 import React from "react";
 import "./App.css";
 
-
 import CreateParticipant from './components/CreateParticipant'
 import ParticipantsTable from "./components/ParticipantsTable";
 
