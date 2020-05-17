@@ -2,6 +2,10 @@
   text-align: center;
 }
 
+.hidden {
+  display: none;
+}
+
 button {
   cursor: pointer;
 }
@@ -37,9 +41,39 @@ button:disabled {
 }
 
 .create-participant-form > div > input {
+  border: 1px solid #cccccc;
   margin-left: 16px;
   height: 40px;
   font-size: 16px;
+  padding-left: 8px;
+}
+
+.update-table-cell > div > div > input {
+  background-color: #F5F5F5;
+  font-size: 16px;
+  margin: 16px 24px 16px 16px;
+  height: 40px;
+  width: -webkit-calc(100% - 40px);
+  width:    -moz-calc(100% - 40px);
+  width:         calc(100% - 40px);
+  padding-left: 8px;
+  font-weight: 500;
+  border: 1px solid #cccccc;
+  -webkit-border-radius: 3px;
+     -moz-border-radius: 3px;
+          border-radius: 3px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+     -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -webkit-transition: border linear 0.2s, box-shadow linear 0.2s;
+     -moz-transition: border linear 0.2s, box-shadow linear 0.2s;
+      -ms-transition: border linear 0.2s, box-shadow linear 0.2s;
+       -o-transition: border linear 0.2s, box-shadow linear 0.2s;
+          transition: border linear 0.2s, box-shadow linear 0.2s;
+}
+
+.update-table-cell > div {
+  margin: 0px;
 }
 
 .create-participant-form > div > button {
@@ -58,7 +92,7 @@ button:disabled {
 }
 
 .page-container {
-  background-color: #D3D3D3;
+  background-color: #F5F5F5;
   padding: 0px;
   padding-bottom: 96px;
 }
@@ -99,4 +133,20 @@ button:disabled {
 
 .ReactTable .rt-thead .rt-th.-sort-asc {
   box-shadow: none;
+}
+
+.view-input {
+  margin: 16px 24px 16px 24px;;
+  height: 40px;
+  width: -webkit-calc(100% - 48px);
+  width:    -moz-calc(100% - 48px);
+  width:         calc(100% - 48px);
+  border: none;
+  background: transparent;
+  border-bottom: 1px solid #fff;
+  outline: none;
+  color: #505050;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
 }

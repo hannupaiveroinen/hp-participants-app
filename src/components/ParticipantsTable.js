@@ -10,7 +10,7 @@ import { faTrash } from '@fortawesome/fontawesome-free-solid'
 import { loadData, addParticipant, deleteParticipant } from '../redux/actions';
 
 class ParticipantsTable extends Component {
-    
+
     componentWillMount() {
         this.props.loadData();
     }
@@ -38,6 +38,7 @@ class ParticipantsTable extends Component {
                 loading={this.state.loading}
                 showPagination={false}
                 minRows={0}
+                getTrProps={onRowClick}
                 defaultSorted={[
                     {
                         id: "name",
@@ -80,7 +81,7 @@ class ParticipantsTable extends Component {
                     }
                 ]}
                 defaultPageSize={this.props.participants.length}
-                className="-highlight participations-table"
+                className="participations-table"
             />
         );
     }
@@ -89,27 +90,42 @@ class ParticipantsTable extends Component {
         return (
             <div
                 style={{
-                    margin: '24px auto 24px 24px',
-                    color: '#505050',
-                    fontSize: '16px',
-                    lineHeight: '24px',
-                    fontWeight: '400'
+                    margin: '0px'
                 }}
-                contentEditable
-                suppressContentEditableWarning
-                /*onBlur={e => {
-                    const data = this.props.participants;
-                    data[cellInfo.index][cellInfo.column.id] = e.target.innerHTML;
+                onClick={e => {
+                    e.target.parentElement.parentElement.parentElement.classList.add('update-table-cell')
+                }}
+                onBlur={e => {
+                    e.target.parentElement.parentElement.parentElement.classList.remove('update-table-cell')
+                    //const data = this.props.participants;
+                    //data[cellInfo.index][cellInfo.column.id] = e.target.innerHTML;
                     // TODO set styles for editable cell (or include createparticipant fragment)
                     // TODO update entity in store
                     //this.setState(state => (state.data = data, state));
-                }}*/
+                }}
                 dangerouslySetInnerHTML={{
                     // TODO debug why this is busted
-                    __html: this.props.participants[cellInfo.index] ? this.props.participants[cellInfo.index][cellInfo.column.id] : ''
+                    __html: this.props.participants[cellInfo.index]
+                        ? "<input type='text' class='view-input' value='" + this.props.participants[cellInfo.index][cellInfo.column.id] + "'/>"
+                        : ''
                 }}
             />
         );
+    }
+}
+
+const onRowClick = (state, rowInfo, column, instance) => {
+    return {
+        onClick: e => {
+            console.log('A Td Element was clicked!')
+            console.log('it produced this event:', e)
+            console.log('It was in this column:', column)
+            console.log('It was in this row:', rowInfo)
+            console.log('It was in this table instance:', instance)
+            rowInfo.setState({
+                background: 'yellow'
+            })
+        }
     }
 }
 
