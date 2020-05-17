@@ -1,4 +1,4 @@
-import namor from 'namor'
+import { uniqueNamesGenerator, names } from 'unique-names-generator';
 
 const range = len => {
     const arr = []
@@ -8,14 +8,25 @@ const range = len => {
     return arr
 }
 
+const domains = [
+    'gmail.com',
+    'yahoo.com',
+    'hotmail.com',
+    'aol.com',
+    'msn.com',
+    'outlook.com',
+    'googlemail.com'
+];
+
 const newPerson = () => {
-    const firstName = namor.generate({ words: 1, numbers: 0 });
-    const lastName = namor.generate({ words: 1, numbers: 0 });
+    const firstName = uniqueNamesGenerator({ dictionaries: [names], length: 1 });
+    const lastName = uniqueNamesGenerator({ dictionaries: [names], length: 1 });
+    const domain = uniqueNamesGenerator({ dictionaries: [domains], length: 1 });
     return {
-        participantId: namor.generate({ words: 0, numbers: 11 }),
+        participantId: Math.floor(Math.random() * 10000000000),//TODO id from store?
         name: firstName + ' ' + lastName,
-        email: firstName + '.' + lastName + '@' + namor.generate({ words: 1, numbers: 0 }) + '.com',
-        phone: '+' + namor.generate({ words: 0, numbers: 12 }),
+        email: firstName.toLowerCase() + '.' + lastName.toLowerCase() + '@' + domain,
+        phone: Math.floor(Math.random() * 10000000000)
     }
 }
 

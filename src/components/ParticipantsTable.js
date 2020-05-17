@@ -32,7 +32,6 @@ class ParticipantsTable extends Component {
     };
 
     render() {
-        console.log("render")
         return (
             <ReactTable
                 data={this.props.participants}

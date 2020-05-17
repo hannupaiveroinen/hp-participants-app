@@ -7,7 +7,7 @@
     "@fortawesome/fontawesome-free-solid": "^5.0.13",
     "@fortawesome/fontawesome-svg-core": "^1.2.20",
     "@fortawesome/react-fontawesome": "^0.1.9",
-    "namor": "^2.0.2",
+    "unique-names-generator": "^4.2.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-form-input-validation": "^2.0.3",
@@ -16,7 +16,8 @@
     "react-table": "^6.9.0",
     "redux": "^4.0.5"
   },
-  "devDependencies": {},
+  "devDependencies": {
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
