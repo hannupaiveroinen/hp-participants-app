@@ -53,21 +53,21 @@ class CreateParticipant extends Component {
                         placeholder="Full name"
                         onBlur={this.form.handleBlurEvent}
                         onChange={this.form.handleChangeEvent}
-                        style={{ width: 190 }} />
+                        style={{ width: 180 }} />
                     <input type="email"
                         name="email"
                         value={this.state.fields.email}
                         placeholder="E-mail address"
                         onBlur={this.form.handleBlurEvent}
                         onChange={this.form.handleChangeEvent}
-                        style={{ width: 330 }} />
+                        style={{ width: 320 }} />
                     <input type="text"
                         name="phone"
                         value={this.state.fields.phone}
                         placeholder="Phone number"
                         onBlur={this.form.handleBlurEvent}
                         onChange={this.form.handleChangeEvent}
-                        style={{ width: 190 }} />
+                        style={{ width: 178 }} />
                     <button disabled={this.state.errors.name || this.state.errors.email || this.state.errors.phone} onClick={this.handleSubmit}>Add new</button>
                 </div>
                 <div style={{ padding: 0 }} >

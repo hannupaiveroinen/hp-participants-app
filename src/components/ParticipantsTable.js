@@ -5,7 +5,7 @@ import "react-table/react-table.css";
 import { connect } from "react-redux";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTrash } from '@fortawesome/fontawesome-free-solid'
+import { faTrash, faPenSquare, faPencilAlt } from '@fortawesome/fontawesome-free-solid'
 
 import { loadData, addParticipant, deleteParticipant } from '../redux/actions';
 
@@ -38,7 +38,12 @@ class ParticipantsTable extends Component {
                 loading={this.state.loading}
                 showPagination={false}
                 minRows={0}
-                getTrProps={onRowClick}
+                getTdProps={() => ({
+                    style: { borderLeft: `none`, borderRight: `none` },
+                })}
+                getThProps={() => ({
+                    style: { borderLeft: `none`, borderRight: `none` },
+                })}
                 defaultSorted={[
                     {
                         id: "name",
@@ -54,23 +59,38 @@ class ParticipantsTable extends Component {
                         Header: "Name",
                         accessor: "name",
                         Cell: this.renderEditable,
-                        width: 220
+                        width: 210
                     }, {
                         Header: "E-mail address",
                         accessor: "email",
                         Cell: this.renderEditable,
-                        width: 360
+                        width: 350
                     }, {
                         Header: "Phone number",
                         accessor: "phone",
                         Cell: this.renderEditable,
-                        width: 220
+                        width: 208
+                    },
+                    {
+                        id: 'edit',
+                        accessor: str => "edit",
+                        Cell: (row) => (
+                            <div>
+                                <span style={{ cursor: 'pointer', color: '#909090', height: 24, width: 24, display: 'inline-block', margin: '24px', fontSize: '24px' }}
+                                    onClick={e => {
+                                        e.target.parentElement.parentElement.parentElement.parentElement.parentElement.classList.add('update-table-cell')
+                                    }}>
+                                    <FontAwesomeIcon icon={faPencilAlt} />
+                                </span>
+                            </div>
+                        ),
+                        width: 3 * 24
                     },
                     {
                         id: 'delete',
                         accessor: str => "delete",
                         Cell: (row) => (
-                            <span style={{ cursor: 'pointer', color: '#909090', height: 24, width: 24, display: 'inline-block', margin: '24px' }}
+                            <span style={{ cursor: 'pointer', color: '#909090', height: 24, width: 24, display: 'inline-block', margin: '24px', fontSize: '24px' }}
                                 onClick={() => {
                                     this.props.deleteParticipant(row.row.participantId);
                                 }}>
@@ -95,14 +115,6 @@ class ParticipantsTable extends Component {
                 onClick={e => {
                     e.target.parentElement.parentElement.parentElement.classList.add('update-table-cell')
                 }}
-                onBlur={e => {
-                    e.target.parentElement.parentElement.parentElement.classList.remove('update-table-cell')
-                    //const data = this.props.participants;
-                    //data[cellInfo.index][cellInfo.column.id] = e.target.innerHTML;
-                    // TODO set styles for editable cell (or include createparticipant fragment)
-                    // TODO update entity in store
-                    //this.setState(state => (state.data = data, state));
-                }}
                 dangerouslySetInnerHTML={{
                     // TODO debug why this is busted
                     __html: this.props.participants[cellInfo.index]
@@ -111,21 +123,6 @@ class ParticipantsTable extends Component {
                 }}
             />
         );
-    }
-}
-
-const onRowClick = (state, rowInfo, column, instance) => {
-    return {
-        onClick: e => {
-            console.log('A Td Element was clicked!')
-            console.log('it produced this event:', e)
-            console.log('It was in this column:', column)
-            console.log('It was in this row:', rowInfo)
-            console.log('It was in this table instance:', instance)
-            rowInfo.setState({
-                background: 'yellow'
-            })
-        }
     }
 }
 
