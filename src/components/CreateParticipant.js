@@ -30,9 +30,11 @@ class CreateParticipant extends Component {
     handleSubmit = () => {
         this.props.addParticipant(this.state.fields);
         this.setState({
-            name: '',
-            email: '',
-            phone: ''
+            fields: {
+                name: '',
+                email: '',
+                phone: ''
+            }
         });
     }
 

@@ -70,7 +70,7 @@ class ParticipantsTable extends Component {
                         Cell: (row) => (
                             <span style={{ cursor: 'pointer', color: '#909090', height: 24, width: 24, display: 'inline-block', margin: '24px' }}
                                 onClick={() => {
-                                    // TODO: refactor to handleRemove
+                                    // TODO: store action DELETE_PARTICIPANT
                                     let data = this.props.participants;
                                     data.splice(row.index, 1)
                                     this.setState({ data })
@@ -102,9 +102,12 @@ class ParticipantsTable extends Component {
                 onBlur={e => {
                     const data = this.props.participants;
                     data[cellInfo.index][cellInfo.column.id] = e.target.innerHTML;
+                    // TODO set styles for editable cell (or include createparticipant fragment)
+                    // TOOD update entity in store
                     this.setState({ data });
                 }}
                 dangerouslySetInnerHTML={{
+                    // TODO debug why this is busted
                     __html: this.props.participants[cellInfo.index][cellInfo.column.id]
                 }}
             />

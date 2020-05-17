@@ -12,7 +12,9 @@
     "react-redux": "^7.2.0",
     "react-scripts": "0.9.5",
     "react-table": "^6.9.0",
-    "redux": "^4.0.5"
+    "redux": "^4.0.5",
+    "namor": "^2.0.2",
+    "react-form-input-validation": "^2.0.3"
   },
   "devDependencies": {},
   "scripts": {
