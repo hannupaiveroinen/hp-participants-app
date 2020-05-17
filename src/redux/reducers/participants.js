@@ -13,6 +13,10 @@ const participants = (state = [], action) => {
       ]
     case 'LOAD_DATA':
       return state;
+    case 'DELETE_PARTICIPANT':
+      return state.filter(function (el) {
+        return el.participantId !== action.participantId;
+      });
     default:
       return state
   }

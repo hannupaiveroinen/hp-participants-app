@@ -7,14 +7,14 @@
     "@fortawesome/fontawesome-free-solid": "^5.0.13",
     "@fortawesome/fontawesome-svg-core": "^1.2.20",
     "@fortawesome/react-fontawesome": "^0.1.9",
+    "namor": "^2.0.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-form-input-validation": "^2.0.3",
     "react-redux": "^7.2.0",
     "react-scripts": "0.9.5",
     "react-table": "^6.9.0",
-    "redux": "^4.0.5",
-    "namor": "^2.0.2",
-    "react-form-input-validation": "^2.0.3"
+    "redux": "^4.0.5"
   },
   "devDependencies": {},
   "scripts": {

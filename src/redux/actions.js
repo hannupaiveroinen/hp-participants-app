@@ -11,3 +11,10 @@ export const addParticipant = participant => ({
 export function loadData() {
   return { type: 'LOAD_DATA' };
 }
+
+export function deleteParticipant(participantId) {
+  return {
+    type: 'DELETE_PARTICIPANT',
+    participantId
+  }
+}

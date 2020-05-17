@@ -7,10 +7,10 @@ import { connect } from "react-redux";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash } from '@fortawesome/fontawesome-free-solid'
 
-import { loadData, addParticipant } from '../redux/actions';
+import { loadData, addParticipant, deleteParticipant } from '../redux/actions';
 
 class ParticipantsTable extends Component {
-
+    
     componentWillMount() {
         this.props.loadData();
     }
@@ -19,6 +19,7 @@ class ParticipantsTable extends Component {
         super();
 
         this.state = {
+            data: [],
             loading: true
         };
 
@@ -27,10 +28,11 @@ class ParticipantsTable extends Component {
 
 
     componentDidMount() {
-        this.setState(state => (state.loading = false, state));
-    }
+        this.setState(state => (state.loading = false, state))
+    };
 
     render() {
+        console.log("render")
         return (
             <ReactTable
                 data={this.props.participants}
@@ -70,10 +72,7 @@ class ParticipantsTable extends Component {
                         Cell: (row) => (
                             <span style={{ cursor: 'pointer', color: '#909090', height: 24, width: 24, display: 'inline-block', margin: '24px' }}
                                 onClick={() => {
-                                    // TODO: store action DELETE_PARTICIPANT
-                                    let data = this.props.participants;
-                                    data.splice(row.index, 1)
-                                    this.setState({ data })
+                                    this.props.deleteParticipant(row.row.participantId);
                                 }}>
                                 <FontAwesomeIcon icon={faTrash} />
                             </span>
@@ -99,16 +98,16 @@ class ParticipantsTable extends Component {
                 }}
                 contentEditable
                 suppressContentEditableWarning
-                onBlur={e => {
+                /*onBlur={e => {
                     const data = this.props.participants;
                     data[cellInfo.index][cellInfo.column.id] = e.target.innerHTML;
                     // TODO set styles for editable cell (or include createparticipant fragment)
-                    // TOOD update entity in store
-                    this.setState({ data });
-                }}
+                    // TODO update entity in store
+                    //this.setState(state => (state.data = data, state));
+                }}*/
                 dangerouslySetInnerHTML={{
                     // TODO debug why this is busted
-                    __html: this.props.participants[cellInfo.index][cellInfo.column.id]
+                    __html: this.props.participants[cellInfo.index] ? this.props.participants[cellInfo.index][cellInfo.column.id] : ''
                 }}
             />
         );
@@ -126,6 +125,9 @@ const mapDispatchToProps = dispatch => ({
     },
     addParticipant: () => {
         dispatch(addParticipant());
+    },
+    deleteParticipant: (participantId) => {
+        dispatch(deleteParticipant(participantId));
     }
 });
 
