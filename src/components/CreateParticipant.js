@@ -15,8 +15,6 @@ class CreateParticipant extends Component {
             errors: {}
         }
 
-        this.touched = false;
-
         this.form = new ReactFormInputValidation(this);
         this.form.useRules({
             name: "required",
@@ -36,10 +34,6 @@ class CreateParticipant extends Component {
                 phone: ''
             }
         });
-    }
-
-    handleTouched = () => {
-        this.touched = true;
     }
 
     render() {

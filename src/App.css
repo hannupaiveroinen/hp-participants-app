@@ -117,7 +117,7 @@ div.saveButton, div.cancelButton {
 }
 
 .ReactTable .rt-table {
-  overflow: hidden;
+  overflow: hidden !important;
 }
 
 .ReactTable .rt-tbody .rt-tr-group, .ReactTable .rt-tbody .rt-td {

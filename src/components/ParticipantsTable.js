@@ -5,9 +5,11 @@ import "react-table/react-table.css";
 import { connect } from "react-redux";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTrash, faPenSquare, faPencilAlt } from '@fortawesome/fontawesome-free-solid'
+import { faTrash, faPencilAlt } from '@fortawesome/fontawesome-free-solid'
 
 import { loadData, addParticipant, deleteParticipant, updateParticipant } from '../redux/actions';
+
+import ReactFormInputValidation from "react-form-input-validation";
 
 class ParticipantsTable extends Component {
 
@@ -20,8 +22,16 @@ class ParticipantsTable extends Component {
 
         this.state = {
             data: [],
-            loading: true
+            loading: true,
+            errors: {}
         };
+
+        this.form = new ReactFormInputValidation(this);
+        this.form.useRules({
+            name: "required",
+            email: "required|email",
+            phone: "required|numeric|digits_between:10,12",
+        });
 
         this.renderEditable = this.renderEditable.bind(this);
     }
@@ -80,7 +90,8 @@ class ParticipantsTable extends Component {
                         Cell: (row) => (
                             <span style={{ cursor: 'pointer', color: '#909090', height: 24, width: 24, display: 'inline-block', margin: '24px', fontSize: '24px' }}
                                 onClick={e => {
-                                    e.target.parentElement.parentElement.parentElement.parentElement.classList.add('update-table-cell')
+                                    e.target.parentElement.parentElement.parentElement.parentElement.classList.add('update-table-cell');
+                                    this.disableOtherElements();
                                 }}>
                                 <FontAwesomeIcon icon={faPencilAlt} />
                             </span>
@@ -109,7 +120,8 @@ class ParticipantsTable extends Component {
                         accessor: str => "cancel",
                         Cell: (row) => (
                             <span onClick={(e) => {
-                                e.target.parentElement.parentElement.parentElement.classList.remove('update-table-cell')
+                                e.target.parentElement.parentElement.parentElement.classList.remove('update-table-cell');
+                                this.enableAllElements();
                             }}>
                                 <button style={{
                                     cursor: 'pointer',
@@ -134,18 +146,20 @@ class ParticipantsTable extends Component {
                             <span onClick={(e) => {
                                 this.props.updateParticipant(row.row);
                                 e.target.parentElement.parentElement.parentElement.classList.remove('update-table-cell')
+                                this.enableAllElements();
                             }}>
-                                <button style={{
-                                    cursor: 'pointer',
-                                    color: '#ffffff',
-                                    border: 'none',
-                                    fontWeight: '500',
-                                    backgroundColor: '#07f',
-                                    height: 40,
-                                    width: 56,
-                                    margin: '16px 8px 16px 4px',
-                                    fontSize: '16'
-                                }} onClick={this.handleCancel}>Save</button>
+                                <button
+                                    style={{
+                                        cursor: 'pointer',
+                                        color: '#ffffff',
+                                        border: 'none',
+                                        fontWeight: '500',
+                                        backgroundColor: '#07f',
+                                        height: 40,
+                                        width: 56,
+                                        margin: '16px 8px 16px 4px',
+                                        fontSize: '16'
+                                    }} onClick={this.handleCancel}>Save</button>
                             </span>
                         ),
                         width: 3 * 24
@@ -164,15 +178,34 @@ class ParticipantsTable extends Component {
                     margin: '0px'
                 }}
                 onClick={e => {
-                    e.target.parentElement.parentElement.parentElement.classList.add('update-table-cell')
+                    e.target.parentElement.parentElement.parentElement.classList.add('update-table-cell');
+                    this.disableOtherElements();
                 }}
+                onBlur={this.form.handleBlurEvent}
+                onChange={this.form.handleChangeEvent}
                 dangerouslySetInnerHTML={{
                     __html: this.props.participants[cellInfo.index]
-                        ? "<input type='text' class='view-input' value='" + this.props.participants[cellInfo.index][cellInfo.column.id] + "'/>"
+                        ? "<input name='" + cellInfo.column.id + "' type='text' class='view-input' value='"
+                        + this.props.participants[cellInfo.index][cellInfo.column.id] + "'/>"
                         : ''
                 }}
             />
         );
+    }
+
+    enableAllElements() {
+        var sheetToBeRemoved = document.getElementById('sheetDisabling');
+        var sheetParent = sheetToBeRemoved.parentNode;
+        sheetParent.removeChild(sheetToBeRemoved);
+    }
+
+    disableOtherElements() {
+        if (!document.getElementById('sheetDisabling')) {
+            var sheet = document.createElement('style')
+            sheet.setAttribute('id', 'sheetDisabling');
+            sheet.innerHTML = "* {pointer-events: none !important;cursor: not-allowed !important;} div.update-table-cell * {pointer-events: all !important;cursor: default !important;}";
+            document.body.appendChild(sheet);
+        }
     }
 }
 
