@@ -18,3 +18,10 @@ export function deleteParticipant(participantId) {
     participantId
   }
 }
+
+export function updateParticipant(participant) {
+  return {
+    type: 'UPDATE_PARTICIPANT',
+    participant
+  }
+}

@@ -72,6 +72,18 @@ button:disabled {
           transition: border linear 0.2s, box-shadow linear 0.2s;
 }
 
+.update-table-cell > div.deleteButton , .update-table-cell > div.editButton {
+  display: none !important;
+}
+
+.update-table-cell > div.saveButton , .update-table-cell > div.cancelButton {
+  display: inline-block !important;
+}
+
+div.saveButton, div.cancelButton {
+  display: none;
+}
+
 .update-table-cell > div {
   margin: 0px;
 }
@@ -104,6 +116,10 @@ button:disabled {
   background-color: #ffffff;
 }
 
+.ReactTable .rt-table {
+  overflow: hidden;
+}
+
 .ReactTable .rt-tbody .rt-tr-group, .ReactTable .rt-tbody .rt-td {
   height: 72px;
   padding: 0px;
@@ -117,14 +133,12 @@ button:disabled {
 .ReactTable .rt-thead .rt-th.-cursor-pointer {
   border-right: none;
   border-left: none;
-}
-
-.ReactTable .rt-thead .rt-th.-cursor-pointer {
   padding: 0px;
 }
 
-.ReactTable .rt-thead .rt-resizable-header-content {
-  margin-top: 10px;
+.ReactTable .rt-thead div.rt-th {
+  border-right: none;
+  border-left: none;
   color: #757575;
   font-size: 14px;
   line-height: 16px;
@@ -149,16 +163,16 @@ button:disabled {
 }
 
 /* Sortable column header arrows */
-.ReactTable .rt-resizable-header {
-  padding: 6px 24px !important;
+.ReactTable .rt-thead .rt-th {
+  padding: 16px !important;
   -webkit-box-shadow: none !important;
   box-shadow: none !important;
 }
 
-.ReactTable .rt-resizer:before {
+.ReactTable .rt-thead .rt-th:before {
   display: inline-block;
   position: absolute;
-  right: 35px;
+  right: 45px;
   top: 15px;
   height: 18px;
   width: 18px;
@@ -169,9 +183,9 @@ button:disabled {
   opacity: 0.87;
 }
 
-.ReactTable  .rt-resizable-header-content:after {
+.ReactTable .rt-thead .rt-th:after {
   position: absolute;
-  right: 35px;
+  right: 45px;
   top: 15px;
   height: 18px;
   width: 18px;
@@ -180,10 +194,10 @@ button:disabled {
   content: '.';
 }
 
-.ReactTable .rt-th.-sort-asc .rt-resizer:before {
+.ReactTable .rt-th.-sort-asc:before {
   background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTgiIGhlaWdodD0iMTgiIHZpZXdCb3g9IjAgMCAxOCAxOCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTAgMTVWNmw0IDQgMS0xLTYtNi02IDYgMSAxIDQtNHY5eiIgZmlsbD0iIzMzMyIvPjwvc3ZnPg==);
 }
 
-.ReactTable .rt-th.-sort-desc .rt-resizer:before {
+.ReactTable .rt-th.-sort-desc:before {
   background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTgiIGhlaWdodD0iMTgiIHZpZXdCb3g9IjAgMCAxOCAxOCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNOCAzdjkuMTNMNCA4IDMgOWw2IDYgNi02LTEtMS00IDQuMTNWM3oiIGZpbGw9IiMzMzMiLz48L3N2Zz4=);
 }

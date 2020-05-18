@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash, faPenSquare, faPencilAlt } from '@fortawesome/fontawesome-free-solid'
 
-import { loadData, addParticipant, deleteParticipant } from '../redux/actions';
+import { loadData, addParticipant, deleteParticipant, updateParticipant } from '../redux/actions';
 
 class ParticipantsTable extends Component {
 
@@ -37,6 +37,7 @@ class ParticipantsTable extends Component {
                 data={this.props.participants}
                 loading={this.state.loading}
                 showPagination={false}
+                resizable={false}
                 minRows={0}
                 getTdProps={() => ({
                     style: { borderLeft: `none`, borderRight: `none` },
@@ -73,21 +74,23 @@ class ParticipantsTable extends Component {
                     },
                     {
                         id: 'edit',
+                        sortable: false,
+                        className: 'editButton',
                         accessor: str => "edit",
                         Cell: (row) => (
-                            <div>
-                                <span style={{ cursor: 'pointer', color: '#909090', height: 24, width: 24, display: 'inline-block', margin: '24px', fontSize: '24px' }}
-                                    onClick={e => {
-                                        e.target.parentElement.parentElement.parentElement.parentElement.parentElement.classList.add('update-table-cell')
-                                    }}>
-                                    <FontAwesomeIcon icon={faPencilAlt} />
-                                </span>
-                            </div>
+                            <span style={{ cursor: 'pointer', color: '#909090', height: 24, width: 24, display: 'inline-block', margin: '24px', fontSize: '24px' }}
+                                onClick={e => {
+                                    e.target.parentElement.parentElement.parentElement.parentElement.classList.add('update-table-cell')
+                                }}>
+                                <FontAwesomeIcon icon={faPencilAlt} />
+                            </span>
                         ),
                         width: 3 * 24
                     },
                     {
                         id: 'delete',
+                        sortable: false,
+                        className: 'deleteButton',
                         accessor: str => "delete",
                         Cell: (row) => (
                             <span style={{ cursor: 'pointer', color: '#909090', height: 24, width: 24, display: 'inline-block', margin: '24px', fontSize: '24px' }}
@@ -95,6 +98,54 @@ class ParticipantsTable extends Component {
                                     this.props.deleteParticipant(row.row.participantId);
                                 }}>
                                 <FontAwesomeIcon icon={faTrash} />
+                            </span>
+                        ),
+                        width: 3 * 24
+                    },
+                    {
+                        id: 'cancel',
+                        sortable: false,
+                        className: 'cancelButton',
+                        accessor: str => "cancel",
+                        Cell: (row) => (
+                            <span onClick={(e) => {
+                                e.target.parentElement.parentElement.parentElement.classList.remove('update-table-cell')
+                            }}>
+                                <button style={{
+                                    cursor: 'pointer',
+                                    color: '#07f',
+                                    border: 'none',
+                                    fontWeight: '500',
+                                    height: 40,
+                                    width: 56,
+                                    margin: '16px 4px 16px 8px',
+                                    fontSize: '16'
+                                }} >Cancel</button>
+                            </span>
+                        ),
+                        width: 3 * 24
+                    },
+                    {
+                        id: 'save',
+                        sortable: false,
+                        className: 'saveButton',
+                        accessor: str => "save",
+                        Cell: (row) => (
+                            <span onClick={(e) => {
+                                this.props.updateParticipant(row.row);
+                                e.target.parentElement.parentElement.parentElement.classList.remove('update-table-cell')
+                            }}>
+                                <button style={{
+                                    cursor: 'pointer',
+                                    color: '#ffffff',
+                                    border: 'none',
+                                    fontWeight: '500',
+                                    backgroundColor: '#07f',
+                                    height: 40,
+                                    width: 56,
+                                    margin: '16px 8px 16px 4px',
+                                    fontSize: '16'
+                                }} onClick={this.handleCancel}>Save</button>
                             </span>
                         ),
                         width: 3 * 24
@@ -116,7 +167,6 @@ class ParticipantsTable extends Component {
                     e.target.parentElement.parentElement.parentElement.classList.add('update-table-cell')
                 }}
                 dangerouslySetInnerHTML={{
-                    // TODO debug why this is busted
                     __html: this.props.participants[cellInfo.index]
                         ? "<input type='text' class='view-input' value='" + this.props.participants[cellInfo.index][cellInfo.column.id] + "'/>"
                         : ''
@@ -140,6 +190,9 @@ const mapDispatchToProps = dispatch => ({
     },
     deleteParticipant: (participantId) => {
         dispatch(deleteParticipant(participantId));
+    },
+    updateParticipant: (participantId) => {
+        dispatch(updateParticipant(participantId));
     }
 });
 
