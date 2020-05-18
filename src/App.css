@@ -2,25 +2,106 @@
   text-align: center;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+.hidden {
+  display: none;
 }
 
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
+button {
+  cursor: pointer;
 }
 
-.App-intro {
-  font-size: large;
+button:disabled {
+  cursor: not-allowed;
+  pointer-events: all !important;
+}
+
+.page-header {
+  background-color: #A9A9A9;
+  font-size: 32px;
 }
 
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
+}
+
+.create-participant-form {
+  margin: 96px 32px 8px 32px;
+}
+
+.create-participant-form > div{
+  display: inline-flex;
+  width: 912px;
+  padding: 16px 0 16px 0;
+  background-color: #ffffff;
+ }
+
+.create-participant-form > h1 {
+  color: #757575;
+}
+
+.create-participant-form > div > input {
+  border: 1px solid #cccccc;
+  margin-left: 16px;
+  height: 40px;
+  font-size: 16px;
+  padding-left: 8px;
+}
+
+.update-table-cell > div > div > input {
+  background-color: #F5F5F5;
+  font-size: 16px;
+  margin: 16px 24px 16px 16px;
+  height: 40px;
+  width: -webkit-calc(100% - 40px);
+  width:    -moz-calc(100% - 40px);
+  width:         calc(100% - 40px);
+  padding-left: 8px;
+  font-weight: 500;
+  border: 1px solid #cccccc;
+  -webkit-border-radius: 3px;
+     -moz-border-radius: 3px;
+          border-radius: 3px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+     -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -webkit-transition: border linear 0.2s, box-shadow linear 0.2s;
+     -moz-transition: border linear 0.2s, box-shadow linear 0.2s;
+      -ms-transition: border linear 0.2s, box-shadow linear 0.2s;
+       -o-transition: border linear 0.2s, box-shadow linear 0.2s;
+          transition: border linear 0.2s, box-shadow linear 0.2s;
+}
+
+.update-table-cell > div {
+  margin: 0px;
+}
+
+.create-participant-form > div > button {
+  font-size: 14px;
+  border: none;
+  margin-left: 16px;
+  font-weight: 500;
+  width: 120px;
+}
+
+.error {
+  color: red;
+  width: 896px;
+  background: white;
+  display: inline-flex;
+  padding: 0 0 16px 24px;
+}
+
+.page-container {
+  background-color: #F5F5F5;
+  padding: 0px;
+  padding-bottom: 96px;
+}
+
+.participations-table {
+  width: 912px;
+  margin-left: 32px;
+  background-color: #ffffff;
 }
 
 .ReactTable .rt-tbody .rt-tr-group, .ReactTable .rt-tbody .rt-td {
@@ -34,11 +115,16 @@
 }
 
 .ReactTable .rt-thead .rt-th.-cursor-pointer {
+  border-right: none;
+  border-left: none;
+}
+
+.ReactTable .rt-thead .rt-th.-cursor-pointer {
   padding: 0px;
 }
 
 .ReactTable .rt-thead .rt-resizable-header-content {
-  margin: 17px auto 17px 24px;
+  margin-top: 10px;
   color: #757575;
   font-size: 14px;
   line-height: 16px;
@@ -46,11 +132,58 @@
   text-align: left;
 }
 
-.ReactTable .rt-thead .rt-th.-sort-desc {
-  box-shadow: none;
-  /*TODO add arrow*/
+.view-input {
+  margin: 16px 24px 16px 24px;;
+  height: 40px;
+  width: -webkit-calc(100% - 48px);
+  width:    -moz-calc(100% - 48px);
+  width:         calc(100% - 48px);
+  border: none;
+  background: transparent;
+  border-bottom: 1px solid #fff;
+  outline: none;
+  color: #505050;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
 }
 
-.ReactTable .rt-thead .rt-th.-sort-asc {
-  box-shadow: none;
+/* Sortable column header arrows */
+.ReactTable .rt-resizable-header {
+  padding: 6px 24px !important;
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+}
+
+.ReactTable .rt-resizer:before {
+  display: inline-block;
+  position: absolute;
+  right: 35px;
+  top: 15px;
+  height: 18px;
+  width: 18px;
+  color: transparent;
+  content: '.';
+  background-size: 18px 18px;
+  background-repeat: no-repeat; 
+  opacity: 0.87;
+}
+
+.ReactTable  .rt-resizable-header-content:after {
+  position: absolute;
+  right: 35px;
+  top: 15px;
+  height: 18px;
+  width: 18px;
+  z-index: 120;
+  color: transparent;
+  content: '.';
+}
+
+.ReactTable .rt-th.-sort-asc .rt-resizer:before {
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTgiIGhlaWdodD0iMTgiIHZpZXdCb3g9IjAgMCAxOCAxOCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTAgMTVWNmw0IDQgMS0xLTYtNi02IDYgMSAxIDQtNHY5eiIgZmlsbD0iIzMzMyIvPjwvc3ZnPg==);
+}
+
+.ReactTable .rt-th.-sort-desc .rt-resizer:before {
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTgiIGhlaWdodD0iMTgiIHZpZXdCb3g9IjAgMCAxOCAxOCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNOCAzdjkuMTNMNCA4IDMgOWw2IDYgNi02LTEtMS00IDQuMTNWM3oiIGZpbGw9IiMzMzMiLz48L3N2Zz4=);
 }
