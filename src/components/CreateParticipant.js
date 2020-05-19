@@ -15,8 +15,6 @@ class CreateParticipant extends Component {
             errors: {}
         }
 
-        this.touched = false;
-
         this.form = new ReactFormInputValidation(this);
         this.form.useRules({
             name: "required",
@@ -36,10 +34,6 @@ class CreateParticipant extends Component {
                 phone: ''
             }
         });
-    }
-
-    handleTouched = () => {
-        this.touched = true;
     }
 
     render() {
@@ -71,13 +65,13 @@ class CreateParticipant extends Component {
                     <button disabled={this.state.errors.name || this.state.errors.email || this.state.errors.phone} onClick={this.handleSubmit}>Add new</button>
                 </div>
                 <div style={{ padding: 0 }} >
-                    <label style={{ width: 200 }} className="error">
+                    <label style={{ width: 180 }} className="error">
                         {this.state.errors.name ? this.state.errors.name : ""}
                     </label>
-                    <label style={{ width: 340 }} className="error">
+                    <label style={{ width: 320 }} className="error">
                         {this.state.errors.email ? this.state.errors.email : ""}
                     </label>
-                    <label style={{ width: 200 }} className="error">
+                    <label style={{ width: 180 }} className="error">
                         {this.state.errors.phone ? this.state.errors.phone : ""}
                     </label>
                 </div>

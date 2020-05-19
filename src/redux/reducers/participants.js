@@ -17,8 +17,12 @@ const participants = (state = [], action) => {
       return state.filter(function (el) {
         return el.participantId !== action.participantId;
       });
+    case 'UPDATE_PARTICIPANT':
+      var foundIndex = state.findIndex(x => x.participantId === action.participantId);
+      state[foundIndex] = action;
+      return state;
     default:
-      return state
+      return state;
   }
 }
 
