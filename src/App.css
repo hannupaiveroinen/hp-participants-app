@@ -11,7 +11,7 @@ button {
 }
 
 button:disabled {
-  cursor: not-allowed;
+  cursor: not-allowed !important;
   pointer-events: all !important;
 }
 
@@ -48,7 +48,7 @@ button:disabled {
   padding-left: 8px;
 }
 
-.update-table-cell > div > div > input {
+.update-table-cell > div > input {
   background-color: #F5F5F5;
   font-size: 16px;
   margin: 16px 24px 16px 16px;
@@ -99,7 +99,6 @@ div.saveButton, div.cancelButton {
 .error {
   color: red;
   width: 896px;
-  background: white;
   display: inline-flex;
   padding: 0 0 16px 24px;
 }
