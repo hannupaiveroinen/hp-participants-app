@@ -1,0 +1,85 @@
+exports[`CreateParticipant should render my component 1`] = `
+<div
+  className="create-participant-form">
+  <h1>
+    List of participants
+  </h1>
+  <div>
+    <input
+      name="name"
+      onBlur={[Function]}
+      onChange={[Function]}
+      placeholder="Full name"
+      style={
+        Object {
+          "width": 180,
+        }
+      }
+      type="text"
+      value="" />
+    <input
+      name="email"
+      onBlur={[Function]}
+      onChange={[Function]}
+      placeholder="E-mail address"
+      style={
+        Object {
+          "width": 320,
+        }
+      }
+      type="email"
+      value="" />
+    <input
+      name="phone"
+      onBlur={[Function]}
+      onChange={[Function]}
+      placeholder="Phone number"
+      style={
+        Object {
+          "width": 178,
+        }
+      }
+      type="text"
+      value="" />
+    <button
+      disabled={undefined}
+      onClick={[Function]}>
+      Add new
+    </button>
+  </div>
+  <div
+    style={
+      Object {
+        "padding": 0,
+      }
+    }>
+    <label
+      className="error"
+      style={
+        Object {
+          "width": 180,
+        }
+      }>
+      
+    </label>
+    <label
+      className="error"
+      style={
+        Object {
+          "width": 320,
+        }
+      }>
+      
+    </label>
+    <label
+      className="error"
+      style={
+        Object {
+          "width": 180,
+        }
+      }>
+      
+    </label>
+  </div>
+</div>
+`;

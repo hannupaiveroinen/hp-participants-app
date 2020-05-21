@@ -186,7 +186,7 @@ class ParticipantsTable extends Component {
                             width: 3 * 24
                         }
                     ]}
-                    defaultPageSize={this.props.participants.length}
+                    defaultPageSize={this.props.participants ? this.props.participants.length : 0}
                     className="participations-table"
                 />
             </div>
