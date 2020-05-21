@@ -18,8 +18,13 @@ const participants = (state = [], action) => {
         return el.participantId !== action.participantId;
       });
     case 'UPDATE_PARTICIPANT':
-      var foundIndex = state.findIndex(x => x.participantId === action.participantId);
-      state[foundIndex] = action;
+      var foundIndex = state.findIndex(x => x.participantId === action.participant.participantId);
+      state[foundIndex] =  {
+        participantId: action.participant.participantId,
+        name: action.participant.name,
+        email: action.participant.email,
+        phone: action.participant.phone
+      };
       return state;
     default:
       return state;

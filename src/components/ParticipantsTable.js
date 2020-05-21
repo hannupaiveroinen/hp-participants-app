@@ -21,6 +21,7 @@ class ParticipantsTable extends Component {
         super();
 
         this.state = {
+            participant: {},
             loading: true,
             errors: {}
         };
@@ -123,7 +124,6 @@ class ParticipantsTable extends Component {
                             Cell: (row) => (
                                 <span style={{ cursor: 'pointer', color: '#909090', height: 24, width: 24, display: 'inline-block', margin: '24px', fontSize: '24px' }}
                                     onClick={() => {
-                                        // TODO behaves odly
                                         this.props.deleteParticipant(row.row.participantId);
                                     }}>
                                     <FontAwesomeIcon icon={faTrash} />
@@ -139,6 +139,7 @@ class ParticipantsTable extends Component {
                             Cell: (row) => (
                                 <span onClick={(e) => {
                                     this.setState(state => (state.errors = {}, state))
+                                    this.props.updateParticipant(row.original);
                                     e.target.parentElement.parentElement.parentElement.classList.remove('update-table-cell');
                                     this.enableAllElements();
                                 }}>
@@ -197,7 +198,7 @@ class ParticipantsTable extends Component {
         return (
             <input
                 onClick={e => {
-                    this.setState(state => (state.loading = false, state));
+                    this.setState(state => (state.participant = cellInfo.original));
                     e.target.parentElement.parentElement.classList.add('update-table-cell');
                     this.disableOtherElements();
                 }}
@@ -239,7 +240,7 @@ class ParticipantsTable extends Component {
             if (value.length < 1) {
                 this.setState(state => (state.errors.phone = "The phone field is required."));
             }
-            else if ((10 > value.length || value.lenth >11)) {
+            else if ((10 > value.length || value.lenth > 11)) {
                 this.setState(state => (state.errors.phone = "The phone field must be between 10 and 12 digits."));
             }
             else if (!value.match(/^\d+$/)) {
@@ -278,8 +279,8 @@ const mapDispatchToProps = dispatch => ({
     deleteParticipant: (participantId) => {
         dispatch(deleteParticipant(participantId));
     },
-    updateParticipant: (participantId) => {
-        dispatch(updateParticipant(participantId));
+    updateParticipant: (participant) => {
+        dispatch(updateParticipant(participant));
     }
 });
 
