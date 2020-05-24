@@ -54,7 +54,7 @@ exports[`ParticipantsTable should render my component 1`] = `
           role="row"
           style={undefined}>
           <div
-            className="rt-th -sort-desc -cursor-pointer"
+            className="rt-th -sort-asc -cursor-pointer"
             onClick={[Function]}
             role="columnheader"
             style={

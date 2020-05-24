@@ -42,7 +42,7 @@ exports[`CreateParticipant should render my component 1`] = `
       type="text"
       value="" />
     <button
-      disabled={undefined}
+      disabled={true}
       onClick={[Function]}>
       Add new
     </button>
