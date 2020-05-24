@@ -88,7 +88,7 @@ class ParticipantsTable extends Component {
                     defaultSorted={[
                         {
                             id: "name",
-                            desc: true
+                            desc: false
                         }
                     ]}
                     columns={[
@@ -110,7 +110,8 @@ class ParticipantsTable extends Component {
                             Header: "Phone number",
                             accessor: "phone",
                             Cell: this.renderEditable,
-                            width: 208
+                            width: 208,
+                            sortType: String
                         },
                         {
                             id: 'edit',
