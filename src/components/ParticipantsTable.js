@@ -14,6 +14,7 @@ class ParticipantsTable extends Component {
 
     componentWillMount() {
         this.props.loadData();
+        this.cloneddata = this.props.participants ? JSON.parse(JSON.stringify(this.props.participants)) : [];
     }
 
     constructor() {
@@ -43,7 +44,7 @@ class ParticipantsTable extends Component {
         const data = { ...this.state.participant };
         const inputContent = input.target;
 
-        this.props.participants.forEach(function(el) {
+        this.props.participants.forEach(function (el) {
             if (el.participantId === cellInfo.original.participantId) {
                 el[inputContent.name] = inputContent.value;
             }
@@ -139,6 +140,7 @@ class ParticipantsTable extends Component {
                                 <span style={{ cursor: 'pointer', color: '#909090', height: 24, width: 24, display: 'inline-block', margin: '24px', fontSize: '24px' }}
                                     onClick={() => {
                                         this.props.deleteParticipant(row.row.participantId);
+                                        this.cloneddata = JSON.parse(JSON.stringify(this.props.participants));
                                     }}>
                                     <FontAwesomeIcon icon={faTrash} />
                                 </span>
@@ -152,8 +154,11 @@ class ParticipantsTable extends Component {
                             accessor: str => "cancel",
                             Cell: (row) => (
                                 <span onClick={(e) => {
-                                    this.setState(state => (state.errors = {}, state))
-                                    this.props.updateParticipant(row.original);
+                                    this.setState(state => (state.errors = {}, state));
+                                    const originalParticipant = this.cloneddata.filter(function (el) {
+                                        return el.participantId === row.original.participantId;
+                                    });
+                                    this.props.updateParticipant(originalParticipant[0]);
                                     e.target.parentElement.parentElement.parentElement.classList.remove('update-table-cell');
                                     this.enableAllElements();
                                 }}>
@@ -182,6 +187,7 @@ class ParticipantsTable extends Component {
                                     this.props.updateParticipant(this.state.participant);
                                     e.target.parentElement.parentElement.parentElement.classList.remove('update-table-cell')
                                     this.enableAllElements();
+                                    this.cloneddata = JSON.parse(JSON.stringify(this.props.participants));
                                 }}>
                                     <button
                                         disabled={this.state.errors.name || this.state.errors.email || this.state.errors.phone}

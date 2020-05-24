@@ -16,7 +16,7 @@ describe("ParticipantsTable", () => {
 
   beforeEach(() => {
     store = mockStore({
-      myState: [],
+      participants: [],
     });
 
     component = renderer.create(

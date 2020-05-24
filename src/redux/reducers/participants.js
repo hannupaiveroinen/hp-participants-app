@@ -23,7 +23,7 @@ const participants = (state = [], action) => {
         participantId: action.participant.participantId,
         name: action.participant.name,
         email: action.participant.email,
-        phone: Number(action.participant.phone)
+        phone: action.participant.phone
       };
       return state;
     default:

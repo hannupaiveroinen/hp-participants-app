@@ -62,7 +62,10 @@ class CreateParticipant extends Component {
                         onBlur={this.form.handleBlurEvent}
                         onChange={this.form.handleChangeEvent}
                         style={{ width: 178 }} />
-                    <button disabled={this.state.errors.name || this.state.errors.email || this.state.errors.phone} onClick={this.handleSubmit}>Add new</button>
+                    <button disabled={this.state.errors.name || this.state.fields.name === ''
+                        || this.state.errors.email || this.state.fields.email === ''
+                        || this.state.errors.phone || this.state.fields.phone === ''}
+                        onClick={this.handleSubmit}>Add new</button>
                 </div>
                 <div style={{ padding: 0 }} >
                     <label style={{ width: 180 }} className="error">

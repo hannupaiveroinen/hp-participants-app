@@ -26,7 +26,7 @@ const newPerson = () => {
         participantId: Math.floor(Math.random() * 10000000000),//TODO id from store?
         name: firstName + ' ' + lastName,
         email: firstName.toLowerCase() + '.' + lastName.toLowerCase() + '@' + domain,
-        phone: Math.floor(Math.random() * 10000000000)
+        phone: Math.floor(Math.random() * 100000000000)
     }
 }
 
