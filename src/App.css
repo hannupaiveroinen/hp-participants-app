@@ -107,12 +107,16 @@ div.saveButton, div.cancelButton {
   background-color: #F5F5F5;
   padding: 0px;
   padding-bottom: 96px;
+  width: 976px;
+  min-width: 976px;
+  max-width: 976px;
 }
 
 .participations-table {
   width: 912px;
   margin-left: 32px;
   background-color: #ffffff;
+  border: none;
 }
 
 .ReactTable .rt-table {

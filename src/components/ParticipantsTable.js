@@ -9,7 +9,6 @@ import { faTrash, faPencilAlt } from '@fortawesome/fontawesome-free-solid'
 
 import { loadData, addParticipant, deleteParticipant, updateParticipant } from '../redux/actions';
 
-import ReactFormInputValidation from "react-form-input-validation";
 
 class ParticipantsTable extends Component {
 
@@ -21,24 +20,38 @@ class ParticipantsTable extends Component {
         super();
 
         this.state = {
+            participant: {},
             loading: true,
             errors: {}
         };
 
-        this.form = new ReactFormInputValidation(this);
-        this.form.useRules({
-            name: "required",
-            email: "required|email",
-            phone: "required|numeric|digits_between:10,12",
-        });
-
         this.renderEditable = this.renderEditable.bind(this);
         this.validateCellInput = this.validateCellInput.bind(this);
+        this.handleFormChange = this.handleFormChange.bind(this);
+
     }
 
     validateCellInput(input) {
-        if (input.target && input.target.name) {
-            this.handleValidation(input.target);
+        const inputContent = input.target;
+        if (inputContent && inputContent.name) {
+            this.handleValidation(inputContent);
+        }
+    }
+
+
+    handleFormChange(input, cellInfo) {
+        const data = { ...this.state.participant };
+        const inputContent = input.target;
+
+        this.props.participants.forEach(function(el) {
+            if (el.participantId === cellInfo.original.participantId) {
+                el[inputContent.name] = inputContent.value;
+            }
+        });
+
+        if (inputContent && inputContent.name) {
+            data[inputContent.name] = inputContent.value;
+            this.setState(state => (state.participant = data));
         }
     }
 
@@ -75,7 +88,7 @@ class ParticipantsTable extends Component {
                     defaultSorted={[
                         {
                             id: "name",
-                            desc: true
+                            desc: false
                         }
                     ]}
                     columns={[
@@ -97,7 +110,8 @@ class ParticipantsTable extends Component {
                             Header: "Phone number",
                             accessor: "phone",
                             Cell: this.renderEditable,
-                            width: 208
+                            width: 208,
+                            sortType: String
                         },
                         {
                             id: 'edit',
@@ -106,7 +120,8 @@ class ParticipantsTable extends Component {
                             accessor: str => "edit",
                             Cell: (row) => (
                                 <span style={{ cursor: 'pointer', color: '#909090', height: 24, width: 24, display: 'inline-block', margin: '24px', fontSize: '24px' }}
-                                    onClick={e => {
+                                    onClick={(e) => {
+                                        this.setState(state => (state.participant = row.row._original));
                                         e.target.parentElement.parentElement.parentElement.parentElement.classList.add('update-table-cell');
                                         this.disableOtherElements();
                                     }}>
@@ -123,7 +138,6 @@ class ParticipantsTable extends Component {
                             Cell: (row) => (
                                 <span style={{ cursor: 'pointer', color: '#909090', height: 24, width: 24, display: 'inline-block', margin: '24px', fontSize: '24px' }}
                                     onClick={() => {
-                                        // TODO behaves odly
                                         this.props.deleteParticipant(row.row.participantId);
                                     }}>
                                     <FontAwesomeIcon icon={faTrash} />
@@ -139,6 +153,7 @@ class ParticipantsTable extends Component {
                             Cell: (row) => (
                                 <span onClick={(e) => {
                                     this.setState(state => (state.errors = {}, state))
+                                    this.props.updateParticipant(row.original);
                                     e.target.parentElement.parentElement.parentElement.classList.remove('update-table-cell');
                                     this.enableAllElements();
                                 }}>
@@ -164,7 +179,7 @@ class ParticipantsTable extends Component {
                             Cell: (row) => (
                                 <span onClick={(e) => {
                                     this.setState(state => (state.errors = {}, state))
-                                    this.props.updateParticipant(row.row);
+                                    this.props.updateParticipant(this.state.participant);
                                     e.target.parentElement.parentElement.parentElement.classList.remove('update-table-cell')
                                     this.enableAllElements();
                                 }}>
@@ -186,7 +201,7 @@ class ParticipantsTable extends Component {
                             width: 3 * 24
                         }
                     ]}
-                    defaultPageSize={this.props.participants.length}
+                    defaultPageSize={this.props.participants ? this.props.participants.length : 0}
                     className="participations-table"
                 />
             </div>
@@ -196,16 +211,20 @@ class ParticipantsTable extends Component {
     renderEditable(cellInfo) {
         return (
             <input
+                contentEditable
                 onClick={e => {
-                    this.setState(state => (state.loading = false, state));
+                    this.setState(state => (state.participant = cellInfo.original));
                     e.target.parentElement.parentElement.classList.add('update-table-cell');
                     this.disableOtherElements();
                 }}
                 type='text'
                 onBlur={this.validateCellInput}
+                onChange={e => {
+                    this.handleFormChange(e, cellInfo);
+                }}
                 name={cellInfo.column.id}
                 className='view-input'
-                placeholder={this.props.participants[cellInfo.index]
+                value={this.props.participants[cellInfo.index]
                     ? this.props.participants[cellInfo.index][cellInfo.column.id]
                     : ''}
             />
@@ -229,7 +248,7 @@ class ParticipantsTable extends Component {
 
     handleValidation(input) {
         const inputName = input.name;
-        const value = input.value || input.placeholder;
+        const value = input.value;
 
         if (inputName === 'name' && value.length < 1) {
             this.setState(state => (state.errors.name = "The name field is required."));
@@ -239,7 +258,7 @@ class ParticipantsTable extends Component {
             if (value.length < 1) {
                 this.setState(state => (state.errors.phone = "The phone field is required."));
             }
-            else if ((10 > value.length || value.lenth >11)) {
+            else if (value.length < 10 || value.length > 12) {
                 this.setState(state => (state.errors.phone = "The phone field must be between 10 and 12 digits."));
             }
             else if (!value.match(/^\d+$/)) {
@@ -258,6 +277,9 @@ class ParticipantsTable extends Component {
             let lastDotPos = value.lastIndexOf('.');
             if (!(lastAtPos < lastDotPos && lastAtPos > 0 && value.indexOf('@@') === -1 && lastDotPos > 2 && (value.length - lastDotPos) > 2)) {
                 this.setState(state => (state.errors.email = "The email format is invalid."));
+            }
+            else {
+                this.setState(state => (state.errors.email = ""));
             }
         }
     }
@@ -278,8 +300,8 @@ const mapDispatchToProps = dispatch => ({
     deleteParticipant: (participantId) => {
         dispatch(deleteParticipant(participantId));
     },
-    updateParticipant: (participantId) => {
-        dispatch(updateParticipant(participantId));
+    updateParticipant: (participant) => {
+        dispatch(updateParticipant(participant));
     }
 });
 

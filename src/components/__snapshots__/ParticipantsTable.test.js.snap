@@ -1,0 +1,190 @@
+exports[`ParticipantsTable should render my component 1`] = `
+<div>
+  <div
+    style={
+      Object {
+        "backgroundColor": "#F5F5F",
+        "marginLeft": 32,
+      }
+    }>
+    <label
+      className="error"
+      style={
+        Object {
+          "width": 180,
+        }
+      }>
+      
+    </label>
+    <label
+      className="error"
+      style={
+        Object {
+          "width": 320,
+        }
+      }>
+      
+    </label>
+    <label
+      className="error"
+      style={
+        Object {
+          "width": 180,
+        }
+      }>
+      
+    </label>
+  </div>
+  <div
+    className="ReactTable participations-table"
+    style={Object {}}>
+    <div
+      className="rt-table"
+      role="grid"
+      style={undefined}>
+      <div
+        className="rt-thead -header"
+        style={
+          Object {
+            "minWidth": "1056px",
+          }
+        }>
+        <div
+          className="rt-tr"
+          role="row"
+          style={undefined}>
+          <div
+            className="rt-th -sort-desc -cursor-pointer"
+            onClick={[Function]}
+            role="columnheader"
+            style={
+              Object {
+                "flex": "210 0 auto",
+                "maxWidth": "210px",
+                "width": "210px",
+              }
+            }
+            tabIndex="-1">
+            <div
+              className="">
+              Name
+            </div>
+          </div>
+          <div
+            className="rt-th -cursor-pointer"
+            onClick={[Function]}
+            role="columnheader"
+            style={
+              Object {
+                "flex": "350 0 auto",
+                "maxWidth": "350px",
+                "width": "350px",
+              }
+            }
+            tabIndex="-1">
+            <div
+              className="">
+              E-mail address
+            </div>
+          </div>
+          <div
+            className="rt-th -cursor-pointer"
+            onClick={[Function]}
+            role="columnheader"
+            style={
+              Object {
+                "flex": "208 0 auto",
+                "maxWidth": "208px",
+                "width": "208px",
+              }
+            }
+            tabIndex="-1">
+            <div
+              className="">
+              Phone number
+            </div>
+          </div>
+          <div
+            className="rt-th"
+            onClick={[Function]}
+            role="columnheader"
+            style={
+              Object {
+                "flex": "72 0 auto",
+                "maxWidth": "72px",
+                "width": "72px",
+              }
+            }
+            tabIndex="-1">
+            <div
+              className="" />
+          </div>
+          <div
+            className="rt-th"
+            onClick={[Function]}
+            role="columnheader"
+            style={
+              Object {
+                "flex": "72 0 auto",
+                "maxWidth": "72px",
+                "width": "72px",
+              }
+            }
+            tabIndex="-1">
+            <div
+              className="" />
+          </div>
+          <div
+            className="rt-th"
+            onClick={[Function]}
+            role="columnheader"
+            style={
+              Object {
+                "flex": "72 0 auto",
+                "maxWidth": "72px",
+                "width": "72px",
+              }
+            }
+            tabIndex="-1">
+            <div
+              className="" />
+          </div>
+          <div
+            className="rt-th"
+            onClick={[Function]}
+            role="columnheader"
+            style={
+              Object {
+                "flex": "72 0 auto",
+                "maxWidth": "72px",
+                "width": "72px",
+              }
+            }
+            tabIndex="-1">
+            <div
+              className="" />
+          </div>
+        </div>
+      </div>
+      <div
+        className="rt-tbody"
+        style={
+          Object {
+            "minWidth": "1056px",
+          }
+        } />
+    </div>
+    <div
+      className="rt-noData">
+      No rows found
+    </div>
+    <div
+      className="-loading">
+      <div
+        className="-loading-inner">
+        Loading...
+      </div>
+    </div>
+  </div>
+</div>
+`;
